@@ -1,13 +1,43 @@
 Version: 1.2
 
 PPU-d73f342bf28ee016ef3d0ccb309b1acb03d8ecce:
+  "Chase Camera - CAR5 FOV and Pitch":
+    Games:
+      "Gran Turismo 5":
+        BCUS98114: [02.11]
+    Author: "TheAdmiester"
+    Patch Version: 1.0
+    Group: ""
+    Notes: "Makes the chase view (camera 1) respect the assigned FOV and pitch of its CAR5 camera entry. By default this will likely not have much visible effect - this opens up the opportunity to set per-car cameras in their own info files."
+
+    Patch:
+      # Force chase cam to read FOV from CAR5 data each frame
+      - [be32, 0x004870F0, 0x38C00025] # li r6, 0x25 (was li r6, 5)
+
+      # NOP the instruction that wrote 0 to chase pitch every frame
+      - [be32, 0x00486060, 0x60000000] # nop (was stw r0, 0(r28))
+
+  "Read Car Camera Data From USRDIR":
+    Games:
+      "Gran Turismo 5":
+        BCUS98114: [02.11]
+    Author: "TheAdmiester"
+    Patch Version: 1.0
+    Group: ""
+    Notes: "Loads every CAR5 file from /USRDIR/car/info/<id>. Complements CAR5 FOV and Pitch patch as this means the cars' camera data can be edited at runtime (e.g. load into race, check cam, change values, reload race). All car/info files MUST be extracted to USRDIR/car/info as there is no fallback to the original files."
+
+    Patch:
+      - [utf8, 0x01948F00, "/APP_DATA_RAW/car/info/%s"] # Rewrite car/info string into free memory
+      - [be32, 0x002D29B0, 0x3D200195]   # Repoint path use to new string (upper)
+      - [be32, 0x002D29B4, 0x39298F00]   # Ditto (lower)
+
   "Enable Motion Blur in Gameplay":
     Games:
       "Gran Turismo 5":
         BCUS98114: [02.11]
     Author: "TheAdmiester"
     Patch Version: 1.0
-    Group: "Motion Blur"
+    Group: ""
     Notes: "Enables replay motion blur in gameplay modes with a couple of fixes to stop it breaking mirrors. Also upgrades motion blur to 24 samples vs 8."
 
     Configurable Values:
@@ -661,7 +691,7 @@ PPU-d73f342bf28ee016ef3d0ccb309b1acb03d8ecce:
         BCUS98114: [02.11]
     Author: "TheAdmiester"
     Patch Version: 1.0
-    Group: "Car Camera Tweaks"
+    Group: ""
     Notes: "Makes the chase view (camera 1) respect the assigned FOV and pitch of its CAR5 camera entry. By default this will likely not have much visible effect - this opens up the opportunity to set per-car cameras in their own info files."
 
     Patch:
@@ -677,7 +707,7 @@ PPU-d73f342bf28ee016ef3d0ccb309b1acb03d8ecce:
         BCUS98114: [02.11]
     Author: "TheAdmiester"
     Patch Version: 1.0
-    Group: "Car Camera Tweaks"
+    Group: ""
     Notes: "Loads every CAR5 file from /USRDIR/car/info/<id>. Complements CAR5 FOV and Pitch patch as this means the cars' camera data can be edited at runtime (e.g. load into race, check cam, change values, reload race). All car/info files MUST be extracted to USRDIR/car/info as there is no fallback to the original files."
 
     Patch:
