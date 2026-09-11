@@ -1249,3 +1249,15 @@ PPU-d73f342bf28ee016ef3d0ccb309b1acb03d8ecce:
       - [be32, 0x017AA5F4, 0x00000000]
       - [be32, 0x017AA5F8, 0x00000000]
       - [be32, 0x017AA5FC, 0x00000000]
+
+  "Use 2x MSAA in 720p Mode":
+    Games:
+      "Gran Turismo 5":
+        BCUS98114: [02.11]
+    Author: "TheAdmiester"
+    Patch Version: 1.0
+    Group: ""
+    Notes: "Drops the 720p render mode from 4x MSAA to 2x (what the 1080p mode already uses). Reduces the cost of the motion blur pass when RPCS3's anti-aliasing is enabled."
+
+    Patch:
+      - [be32, 0x008B101C, 0x38000003] # li r0, 3 (was li r0, 5)
