@@ -8,7 +8,7 @@ PPU-7a5ee7bc2fef9566dd80e35893fe2c5571197726:
     Author: "TheAdmiester"
     Patch Version: 1.0
     Group: ""
-    Notes: "Makes the chase view (camera 1) respect the assigned FOV and pitch of its CAR5 camera entry. By default this will likely not have much visible effect - this opens up the opportunity to set per-car cameras in their own info files."
+    Notes: "Makes the chase view (camera 1) use the FOV and pitch of its CAR5 camera entry. By default this will not have much effect but allows for per-car cameras in their own info files."
 
     Patch:
       # Force chase cam to read FOV from CAR5 data each frame
@@ -1257,7 +1257,7 @@ PPU-7a5ee7bc2fef9566dd80e35893fe2c5571197726:
     Author: "TheAdmiester"
     Patch Version: 1.0
     Group: ""
-    Notes: "Drops the 720p render mode from 4x MSAA to 2x (what the 1080p mode already uses). Reduces the cost of the motion blur pass when RPCS3's anti-aliasing is enabled."
+    Notes: "Drops 720p mode from 4x MSAA to 2x. Reduces the cost of motion blur when RPCS3's AA is on."
 
     Patch:
       - [be32, 0x008B101C, 0x38000003] # li r0, 3 (was li r0, 5)
